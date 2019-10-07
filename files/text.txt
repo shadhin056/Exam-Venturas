@@ -1,0 +1,63 @@
+
+using System;
+using System.Collections.Generic;
+
+class MainClass {
+  public static string MinWindowSubstring(string[] strArr) {
+    string res="";
+
+    var dic = new Dictionary<char, int>();
+    for(int i=0;i<strArr[1].Length;i++)
+    {
+        if(dic.ContainsKey(strArr[1][i]))
+        {
+            dic[strArr[1][i]]++;
+        }
+        else{
+            dic.Add(strArr[1][i],1);
+        }
+    }
+    var length = strArr[0].Length+1;
+    var s=0;
+    var count=strArr[1].Length;
+    for(int j=0;j<strArr[0].Length;j++)
+    {
+        if(dic.ContainsKey(strArr[0][j]))
+        {
+            if(dic[strArr[0][j]]-- >0)
+            {
+                count--;
+            }
+        }
+        while (count==0)
+        {
+            if(length>(j-s+1))
+            {
+                length = (j-s+1);
+                res = strArr[0].Substring(s,length);
+
+            }
+            if(dic.ContainsKey(strArr[0][s]))
+            {
+                if(dic[strArr[0][s]]++ >=0)
+                {
+                    count++;
+                }
+            }
+            s++;
+        }
+    }
+
+
+     return res;
+}
+
+
+
+
+  static void Main() {
+    // keep this function call here
+    Console.WriteLine(MinWindowSubstring(Console.ReadLine()));
+  }
+
+}
